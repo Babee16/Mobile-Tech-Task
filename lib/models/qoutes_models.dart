@@ -4,23 +4,24 @@
 
 import 'dart:convert';
 
-class Qoutes {
-  Qoutes({
+class QoutesModel {
+  QoutesModel({
     required this.thought,
   });
 
-  final Thought thought;
+  final Thought? thought;
 
-  factory Qoutes.fromJson(String str) => Qoutes.fromMap(json.decode(str));
+  factory QoutesModel.fromJson(String str) =>
+      QoutesModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Qoutes.fromMap(Map<String, dynamic> json) => Qoutes(
+  factory QoutesModel.fromMap(Map<String, dynamic> json) => QoutesModel(
         thought: Thought.fromMap(json["thought"]),
       );
 
   Map<String, dynamic> toMap() => {
-        "thought": thought.toMap(),
+        "thought": thought == null ? null : thought!.toMap(),
       };
 }
 
@@ -39,17 +40,17 @@ class Thought {
     required this.shortUri,
   });
 
-  final String naturalId;
-  final String quote;
-  final String quoteFragment;
-  final String uri;
-  final int sortField;
-  final ThoughtAuthorElement thoughtAuthor;
-  final List<ThoughtAuthorElement> thoughtThemes;
-  final List<Thought> relatedAuthorThoughts;
-  final List<RelatedThemeThought> relatedThemeThoughts;
-  final bool visible;
-  final String shortUri;
+  final String? naturalId;
+  final String? quote;
+  final String? quoteFragment;
+  final String? uri;
+  final int? sortField;
+  final ThoughtAuthorElement? thoughtAuthor;
+  final List<ThoughtAuthorElement>? thoughtThemes;
+  final List<Thought>? relatedAuthorThoughts;
+  final List<RelatedThemeThought>? relatedThemeThoughts;
+  final bool? visible;
+  final String? shortUri;
 
   factory Thought.fromJson(String str) => Thought.fromMap(json.decode(str));
 
@@ -61,13 +62,20 @@ class Thought {
         quoteFragment: json["quoteFragment"],
         uri: json["uri"],
         sortField: json["sortField"],
-        thoughtAuthor: ThoughtAuthorElement.fromMap(json["thoughtAuthor"]),
-        thoughtThemes: List<ThoughtAuthorElement>.from(
-            json["thoughtThemes"].map((x) => ThoughtAuthorElement.fromMap(x))),
-        relatedAuthorThoughts: List<Thought>.from(
-            json["relatedAuthorThoughts"].map((x) => Thought.fromMap(x))),
-        relatedThemeThoughts: List<RelatedThemeThought>.from(
-            json["relatedThemeThoughts"]
+        thoughtAuthor: json["thoughtAuthor"] == null
+            ? null
+            : ThoughtAuthorElement.fromMap(json["thoughtAuthor"]),
+        thoughtThemes: json["thoughtThemes"] == null
+            ? null
+            : List<ThoughtAuthorElement>.from(json["thoughtThemes"]
+                .map((x) => ThoughtAuthorElement.fromMap(x))),
+        relatedAuthorThoughts: json["relatedAuthorThoughts"] == null
+            ? null
+            : List<Thought>.from(
+                json["relatedAuthorThoughts"].map((x) => Thought.fromMap(x))),
+        relatedThemeThoughts: json["relatedThemeThoughts"] == null
+            ? null
+            : List<RelatedThemeThought>.from(json["relatedThemeThoughts"]
                 .map((x) => RelatedThemeThought.fromMap(x))),
         visible: json["visible"],
         shortUri: json["shortUri"],
@@ -79,13 +87,16 @@ class Thought {
         "quoteFragment": quoteFragment,
         "uri": uri,
         "sortField": sortField,
-        "thoughtAuthor": thoughtAuthor.toMap(),
-        "thoughtThemes":
-            List<dynamic>.from(thoughtThemes.map((x) => x.toMap())),
-        "relatedAuthorThoughts":
-            List<dynamic>.from(relatedAuthorThoughts.map((x) => x.toMap())),
-        "relatedThemeThoughts":
-            List<dynamic>.from(relatedThemeThoughts.map((x) => x.toMap())),
+        "thoughtAuthor": thoughtAuthor == null ? null : thoughtAuthor!.toMap(),
+        "thoughtThemes": thoughtThemes == null
+            ? null
+            : List<dynamic>.from(thoughtThemes!.map((x) => x.toMap())),
+        "relatedAuthorThoughts": relatedAuthorThoughts == null
+            ? null
+            : List<dynamic>.from(relatedAuthorThoughts!.map((x) => x.toMap())),
+        "relatedThemeThoughts": relatedThemeThoughts == null
+            ? null
+            : List<dynamic>.from(relatedThemeThoughts!.map((x) => x.toMap())),
         "visible": visible,
         "shortUri": shortUri,
       };
@@ -104,15 +115,15 @@ class RelatedThemeThought {
     required this.shortUri,
   });
 
-  final String naturalId;
-  final String quote;
-  final String quoteFragment;
-  final String uri;
-  final int sortField;
-  final ThoughtAuthor thoughtAuthor;
-  final List<ThoughtAuthorElement> thoughtThemes;
-  final bool visible;
-  final String shortUri;
+  final String? naturalId;
+  final String? quote;
+  final String? quoteFragment;
+  final String? uri;
+  final int? sortField;
+  final ThoughtAuthor? thoughtAuthor;
+  final List<ThoughtAuthorElement>? thoughtThemes;
+  final bool? visible;
+  final String? shortUri;
 
   factory RelatedThemeThought.fromJson(String str) =>
       RelatedThemeThought.fromMap(json.decode(str));
@@ -126,9 +137,13 @@ class RelatedThemeThought {
         quoteFragment: json["quoteFragment"],
         uri: json["uri"],
         sortField: json["sortField"],
-        thoughtAuthor: ThoughtAuthor.fromMap(json["thoughtAuthor"]),
-        thoughtThemes: List<ThoughtAuthorElement>.from(
-            json["thoughtThemes"].map((x) => ThoughtAuthorElement.fromMap(x))),
+        thoughtAuthor: json["thoughtAuthor"] == null
+            ? null
+            : ThoughtAuthor.fromMap(json["thoughtAuthor"]),
+        thoughtThemes: json["thoughtThemes"] == null
+            ? null
+            : List<ThoughtAuthorElement>.from(json["thoughtThemes"]
+                .map((x) => ThoughtAuthorElement.fromMap(x))),
         visible: json["visible"],
         shortUri: json["shortUri"],
       );
@@ -139,9 +154,10 @@ class RelatedThemeThought {
         "quoteFragment": quoteFragment,
         "uri": uri,
         "sortField": sortField,
-        "thoughtAuthor": thoughtAuthor.toMap(),
-        "thoughtThemes":
-            List<dynamic>.from(thoughtThemes.map((x) => x.toMap())),
+        "thoughtAuthor": thoughtAuthor == null ? null : thoughtAuthor!.toMap(),
+        "thoughtThemes": thoughtThemes == null
+            ? null
+            : List<dynamic>.from(thoughtThemes!.map((x) => x.toMap())),
         "visible": visible,
         "shortUri": shortUri,
       };
@@ -154,9 +170,9 @@ class ThoughtAuthor {
     required this.image,
   });
 
-  final String name;
-  final String uri;
-  final String image;
+  final String? name;
+  final String? uri;
+  final String? image;
 
   factory ThoughtAuthor.fromJson(String str) =>
       ThoughtAuthor.fromMap(json.decode(str));
